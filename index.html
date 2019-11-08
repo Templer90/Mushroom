@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Mushrooms</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap\bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="data.js" ></script>
 </head>
@@ -14,8 +14,18 @@
             <div class="text-center">
                 <br>
                 <div class="p-3 mb-2 bg-light text-dark">
-                    <button onclick="main()" type="button" class="btn btn-primary">Random</button>
+                    <button onclick="main()" type="button" class="d-inline btn btn-primary">Random</button>
+                    <div class="dropdown d-inline">
+                        <button class="btn btn-secondary dtn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Debug
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" onclick="changeType('debug')">Debug</a>
+                            <a class="dropdown-item" onclick="changeType('lol')">LOL</a>
+                        </div>
+                    </div>
                 </div>
+
                 <p class="p-3 mb-2 bg-light text-dark" id="effect">
                     TestText
                 </p>
@@ -24,14 +34,16 @@
     </main>
     <footer class="footer mt-auto py-3">
         <div class="container">
-            <span class="text-muted">
-                Made with ReBaaS (Responsive Blockchain as a Service) using MLC (Machine Leaning in the Cloud) Technology<br>
-                Rendered on a Quantum On Demand&#8482; Amazon Web AWS Service<br>
-                Also Bootstrap
+            <span class="text-muted footer-text">
+                Made with ReBaaS&copy; (Responsive Blockchain as a Service) using MLC-Technology&reg; (Machine Leaning in the Cloud Technology).<br>
+                Rendered on a Quantum On Demand&#8482; Amazon Web AWS Service&#8482;&reg;.<br>
+                Also Bootstrap GDPR <a href="https://www.publicdomainpictures.net/pictures/10000/velka/33-1210498515t3lN.jpg">Cookies</a>
             </span>
         </div>
     </footer>
-
+    <script src="bootstrap\jQuery.js"></script>
+    <script src="bootstrap\popper.js"></script>
+    <script src="bootstrap\bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
