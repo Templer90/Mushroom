@@ -3,3 +3,5 @@ function main(){
     let div=document.getElementById("effect");
     div.innerText=data[index];
 }
+
+main();
