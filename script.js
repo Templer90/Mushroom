@@ -1,9 +1,23 @@
-var type="debug";
+var type="Debug";
+
+function init(){
+   var but=document.getElementById("dropdownMenuButtonList");
+    for(s in data){
+        var b=document.createElement("button");
+        b.setAttribute("class", "dropdown-item");
+        b.setAttribute("type", "button");
+        b.setAttribute('onClick',"changeType('"+s+"');");
+        b.innerHTML=s;
+        but.appendChild(b);
+    }
+    var but;
+}
 
 function changeType(t){
     let but=document.getElementById("dropdownMenuButton");
     but.innerHTML=t;
     type=t;
+    main();
 }
 
 function main(){
@@ -25,4 +39,6 @@ function main(){
     dat.func();
 }
 
+
+init();
 main();
