@@ -1,4 +1,4 @@
-var type="Debug";
+var type="Magic8Ball";
 
 function init(){
    var but=document.getElementById("dropdownMenuButtonList");
@@ -10,7 +10,7 @@ function init(){
         b.innerHTML=s;
         but.appendChild(b);
     }
-    var but;
+    changeType(type);
 }
 
 function changeType(t){
@@ -36,7 +36,10 @@ function main(){
     }
 
     div.innerHTML=dat.text;
-    dat.func();
+    let ret=dat.func();
+    if (typeof(ret) !== 'undefined'){
+        div.innerHTML=ret;
+    }
 }
 
 
