@@ -36,7 +36,7 @@ function main(){
     }
 
     div.innerHTML=dat.text;
-    let ret=dat.func();
+    let ret=dat.func(dat);
     if (typeof(ret) !== 'undefined'){
         div.innerHTML=ret;
     }
