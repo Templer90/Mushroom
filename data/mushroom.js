@@ -1,7 +1,7 @@
 //    {text:"text der angezeigt werden soll", func:()=>{alert("LOL");}},
 
-var data={
-    Mushrooms:[
+const data = {
+    Mushrooms: [
         "Fade<br>Du bekommst Hunger nach mehr Pilzen.",
         "Traube<br>Du kannst in absoluter Dunkelheit sehen. Direktes Licht blendet dich stark.",
         "Gras<br>Du wirst ganz entspannt und locker.",
@@ -63,16 +63,15 @@ var data={
         "Elf<br>Du wirst arrogant und behandelst andere Personen wie Untergebene.",
         "Gummi<br>Du kannst bewusstlos geschlagen werden. Darüber hinaus tötet dich nur Feuer und Säure.",
         "Lippenstift<br> Die nächste Person die dich anspricht willst du küssen.",
-        "Schlechte Garnelen<br> Die wird übel.",
+        "Schlechte Garnelen<br> Dir wird übel.",
         "Hase<br>Du wirst sehr vorsichtig und ängstlich.",
         "Die Wahrheit<br>Du kannst nicht lügen.",
         "Schnecke<br>Du läufst nur noch halb so schnell. Dafür kletterst du mit voller Geschwindigkeit.",
         "Abenteuer<br> Würfel noch dreimal und kombiniere die Effekte.",
         "Nudeln<br> Alle Freunde und Feinde sehen für dich gleich aus.",
         "Geist<br>Du fängst an einen cm über den Boden zu schweben."
-      
     ],
-    Things:[
+    Things: [
         "Drunkard’s Hat<br>This straw has frayed at the edges over time. The wearer always knows the direction of the nearest alcoholic drink.",
         "Coin of Certainty<br>This silver coin is indistinguishable from other coins, except for one unique quality. When flipped, it will always land on heads.",
         "Sentinel Amulet<br>This amulet (a small carnelian carving of a hawk) gives off a faint glow whenever a gnome is within one hundred feet.",
@@ -86,37 +85,37 @@ var data={
         "Tavern Bracers<br>While wearing these ale-soaked leather bracers, you have proficiency with both darts and playing cards. You also gain a +2 modifier to rolls for unarmed strikes.",
         "Tome of Cat Summoning<br>By opening this aged, leather bound tome and reading it, you summon a normal cat. The cat lays upon the tome and does nothing else, but departs if removed from the tome or attacked."
     ],
-    Percent:[
+    Percent: [
         {
-            text:"Irrelevant",
-            list:["Around %p","~ %p", "Definitly %p", "Less then %p", "More then %p", "%p +/- 10%", "Close to %p", "%p%", "%p"],
-            func:(obj)=>{
-                let p = Math.random()*100;
-                let i=Math.floor(Math.random()*obj.list.length);
-                return obj.list[i].replace("%p",p.toFixed(2));
+            text: "Irrelevant",
+            list: ["Around %p", "~ %p", "Definitly %p", "Less then %p", "More then %p", "%p +/- 10%", "Close to %p", "%p%", "%p"],
+            func: (obj) => {
+                let p = Math.random() * 100;
+                let i = Math.floor(Math.random() * obj.list.length);
+                return obj.list[i].replace("%p", p.toFixed(2));
             }
         }
     ],
-    Magic8Ball:[
-          "It is certain.",
-          "It is decidedly so.",
-          "Without a doubt.",
-          "Yes - definitely.",
-          "You may rely on it.",
-          "As I see it, yes.",
-          "Most likely.",
-          "Outlook good.",
-          "Yes.",
-          "Signs point to yes.",
-          "Reply hazy, try again.",
-          "Ask again later.",
-          "Better not tell you now.",
-          "Cannot predict now.",
-          "Concentrate and ask again.",
-          "Don't count on it.",
-          "My reply is no.",
-          "My sources say no.",
-          "Outlook not so good.",
-          "Very doubtful."
+    Magic8Ball: [
+        "It is certain.",
+        "It is decidedly so.",
+        "Without a doubt.",
+        "Yes - definitely.",
+        "You may rely on it.",
+        "As I see it, yes.",
+        "Most likely.",
+        "Outlook good.",
+        "Yes.",
+        "Signs point to yes.",
+        "Reply hazy, try again.",
+        "Ask again later.",
+        "Better not tell you now.",
+        "Cannot predict now.",
+        "Concentrate and ask again.",
+        "Don't count on it.",
+        "My reply is no.",
+        "My sources say no.",
+        "Outlook not so good.",
+        "Very doubtful."
     ]
-}
+};
