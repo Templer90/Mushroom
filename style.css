@@ -32,7 +32,22 @@
     font-size: 0.5rem;
 }
 
+.card.None{
+    background-color: ghostwhite;
+}
 
 .card.Potion{
-    background-color: yellow;
+    background-color: #fff235;
+}
+
+.card.Daily{
+    background-color: gray;
+}
+
+.card.Encounter{
+    background-color: firebrick;
+}
+
+.card.Normal{
+    background-color: green;
 }
