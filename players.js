@@ -11,32 +11,35 @@ function createTag(tagName, attrs, parent) {
 }
 
 function genCard(obj, classes) {
-    const name=obj.name;
-    const description=obj.description;
-    const type=obj.type;
+    const name = obj.name;
+    const description = obj.description;
+    const type = obj.type;
 
     if (typeof (classes) === 'undefined') {
         classes = "";
     }
-    
-    const card = createTag("div", {class: "card "+type+" "+classes, style:"width: 30%"});
-    const head = createTag("h5", {class: "card-header"});
+
+    const card = createTag("div", {class: "card " + type + " " + classes});
+    const head = createTag("h7", {class: "card-header"}, card);
     head.innerText = name;
-    card.appendChild(head);
-    const cardBody = createTag("div", {class: "card-body"});
+
+    const cardBody = createTag("div", {class: "card-body", style:"font-size: 0.5rem;"}, card);
     cardBody.innerHTML = description;
-    card.appendChild(cardBody);
-    
+
     return card;
 }
 
 function genPlayer(obj) {
-    function createLI(controlID, player,  nav, active) {
-        const tab = createTag("li", {class: "nav-controllID"});
+    const genID = (player, controlID) => {
+        return "tab" + player + controlID
+    };
+    
+    function createLI(controlID, player, nav, active) {
+        const tab = createTag("li", {class: "nav-item"});
         const a = createTag("a", {
             class: active ? "nav-link active" : "nav-link",
             id: player + "-" + controlID + "-tab",
-            href: "#tab" + controlID,
+            href: "#" + genID(player, controlID),
             "data-toggle": "tab",
             role: "tab",
             "aria-controls": "nav-" + player + "-" + controlID,
@@ -50,12 +53,41 @@ function genPlayer(obj) {
     function createPane(controlID, player, list, tabPaneContend, active) {
         const tabPaneItem = createTag("div", {
             class: "tab-pane fade show" + (active ? " active" : ""),
-            id: "tab" + controlID,
+            id: genID(player, controlID),
             role: "tabpanel",
             "aria-labelledby": player + "-" + controlID + "-tab"
         }, tabPaneContend);
+        
+        let currentRow = createTag("div", {
+            class: "row"
+        }, tabPaneItem);
+        
+        let row = 0;
+        let col = 0;
+        let max=3;
         for (const obj in list) {
-            tabPaneItem.appendChild(genCard(list[obj]));
+            col++;
+
+            let currentCol = createTag("div", {
+                class: "col"
+            }, currentRow);
+            
+            // noinspection JSUnfilteredForInLoop
+            currentCol.appendChild(genCard(list[obj]));
+
+            if (col === max) {
+                col = 0;
+                row++;
+
+                currentRow = createTag("div", {
+                    class: "row"
+                }, tabPaneItem);
+            }
+        }
+
+        for (let i = col; i < max; i++) {
+            col++;
+            createTag("div", {class: "col"}, currentRow);
         }
     }
 
