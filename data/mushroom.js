@@ -69,7 +69,10 @@ const data = {
         "Schnecke<br>Du läufst nur noch halb so schnell. Dafür kletterst du mit voller Geschwindigkeit.",
         "Abenteuer<br> Würfel noch dreimal und kombiniere die Effekte.",
         "Nudeln<br> Alle Freunde und Feinde sehen für dich gleich aus.",
-        "Geist<br>Du fängst an einen cm über den Boden zu schweben."
+        "Geist<br>Du fängst an einen cm über den Boden zu schweben.",
+        "Altes Metall<br>Deine Gottheit ist für 1d6 Tage Anoia (Göttin der Dinge, die in Schubladen klemmen)",
+        "(Benutzte) Putzlappen<br>Alles muss sauber sein, bzw. du denkst dass alles dreckig ist und geputzt werden sollte",
+        "Royal<br>Deine Stimme klingt besser, dafür sieht es so aus als ob du hast einen leichten Überbiss mit Zahllücke hast. Würfle 1d4 um zu bestimmen ob du: <br>(1)Fahrad fahren<br>(2)Ausbrechen<br>(3)es alles<br>(4)einen Supersonicman<br>möchtest"
     ],
     Things: [
         "Drunkard’s Hat<br>This straw has frayed at the edges over time. The wearer always knows the direction of the nearest alcoholic drink.",
