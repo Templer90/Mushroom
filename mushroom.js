@@ -2,6 +2,10 @@ let type = "Magic8Ball";
 
 function init() {
     const but = document.getElementById("dropdownMenuButtonList");
+    const defaultLineCallback = (line) => {
+        return line[0] + '<br>' + line[1];
+    };
+    
     for (const s in data) {
         const b = document.createElement("button");
         b.setAttribute("class", "dropdown-item");
@@ -9,6 +13,24 @@ function init() {
         b.setAttribute('onClick', "changeType('" + s + "');");
         b.innerHTML = s;
         but.appendChild(b);
+
+        const current = data[s];
+        if ((typeof (current) === 'object') && (typeof (current.spreadsheet) === 'string')) {
+            handleClientLoad(current.spreadsheet, function (response) {
+                let callback = defaultLineCallback;
+                if (typeof (current.lineCallback) === 'function') {
+                    callback = current.lineCallback;
+                }
+                
+                let values = response.result.values;
+                let arr = [];
+                for (let i = 1; i < values.length; i++) {
+                    arr[i-1] = callback(values[i]);
+                }
+
+                data[s] = arr;
+            });
+        }
     }
     changeType(type);
 }
