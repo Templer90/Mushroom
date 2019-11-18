@@ -1,34 +1,34 @@
-let type = "Magic8Ball";
+let type = 'Magic8Ball';
 
 function init() {
-    const but = document.getElementById("dropdownMenuButtonList");
+    const but = document.getElementById('dropdownMenuButtonList');
     const defaultLineCallback = (line) => {
         return line[0] + '<br>' + line[1];
     };
     
-    for (const s in data) {
-        const b = document.createElement("button");
-        b.setAttribute("class", "dropdown-item");
-        b.setAttribute("type", "button");
-        b.setAttribute('onClick', "changeType('" + s + "');");
-        b.innerHTML = s;
+    for (const entry in data) {
+        const b = document.createElement('button');
+        b.setAttribute('class', 'dropdown-item');
+        b.setAttribute('type', 'button');
+        b.setAttribute('onClick', "changeType('" + entry + "');");
+        b.innerHTML = entry;
         but.appendChild(b);
 
-        const current = data[s];
+        const current = data[entry];
         if ((typeof (current) === 'object') && (typeof (current.spreadsheet) === 'string')) {
-            handleClientLoad(current.spreadsheet, function (response) {
+            handleClientLoad(current.spreadsheet, (response) => {
                 let callback = defaultLineCallback;
                 if (typeof (current.lineCallback) === 'function') {
                     callback = current.lineCallback;
                 }
-                
+
                 let values = response.result.values;
                 let arr = [];
                 for (let i = 1; i < values.length; i++) {
-                    arr[i-1] = callback(values[i]);
+                    arr[i - 1] = callback(values[i]);
                 }
 
-                data[s] = arr;
+                data[entry] = arr;
             });
         }
     }
@@ -36,7 +36,7 @@ function init() {
 }
 
 function changeType(t) {
-    let but = document.getElementById("dropdownMenuButton");
+    let but = document.getElementById('dropdownMenuButton');
     but.innerHTML = t;
     type = t;
     main();
@@ -44,10 +44,10 @@ function changeType(t) {
 
 function main() {
     let index = Math.floor(Math.random() * data[type].length);
-    let div = document.getElementById("effect");
+    let div = document.getElementById('effect');
     let element = data[type][index];
     let dat = {
-        text: "debugText",
+        text: 'debugText',
         func: () => {}
     };
 

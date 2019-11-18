@@ -125,11 +125,32 @@ function genPlayer(obj) {
     return card;
 }
 
+const offsets = {
+    name: {r: 1, c: "B", l:1},
+    magic: {r: 5, c: "A", l:3},
+
+
+    get: function(thing, array, row = 0){
+        let off = this[thing];
+        let ret = [];
+        let col = off.c.charCodeAt(0) - "A".charCodeAt(0);
+
+        for (let i = 0; i < off.l; i++) {
+            ret[i] = array[(off.r - 1) + row][col+i];
+        }
+
+        return ret;
+    }
+};
+
+
 function init() {
     const accordion = document.getElementById("accordion");
     for (const player in players) {
         accordion.appendChild(genPlayer(players[player]));
     }
 }
+
+
 
 init();

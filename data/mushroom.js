@@ -1,5 +1,5 @@
 //Liste an Zeilen
-//{text:"text der angezeigt werden soll", func:()=>{alert("LOL");}},
+//{text:"text der angezeigt werden soll", func:()=>{}},
 //{spreadsheet:"Sheet von GoogleDock", lineCallback:},
 const data = {
     Mushrooms: {

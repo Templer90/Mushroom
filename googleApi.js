@@ -6,24 +6,22 @@ const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v
 //A Queue would be nice
 
 function handleClientLoad(sheet, callback) {
-    function initClient() {
+    gapi.load('client', () => {
         gapi.client.init({
             apiKey: API_KEY,
             discoveryDocs: DISCOVERY_DOCS,
             scope: SCOPES
-        }).then(function () {
+        }).then(() => {
             gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: SPREADSHEET_ID,
                 range: sheet,
             }).then(
                 callback,
-                function (response) {
+                (response) => {
                     console.log('Error: ' + response.result.error.message);
                 });
-        }, function (error) {
+        }, (error) => {
             console.log('Error2: ' + JSON.stringify(error, null, 2));
         });
-    }
-    
-    gapi.load('client', initClient);
+    });
 }
