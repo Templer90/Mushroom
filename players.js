@@ -64,7 +64,7 @@ function genPlayer(file) {
         
         let row = 0;
         let col = 0;
-        let max=3;
+        let max=2;
         for (const obj in list) {
             col++;
 
