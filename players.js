@@ -201,7 +201,7 @@ const data = [];
 
 function init() {
     const accordion = document.getElementById("accordion");
-    const players = ["Player_Eric", "Player_Björn"];
+    const players = ["Player_Eric", "Player_Björn","Player_Kevin","Player_Marc","Player_Martina"];
     for (const player in players) {
         handleClientLoad(players[player + ""], (response) => {
             //response.result.values;
