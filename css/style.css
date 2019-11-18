@@ -52,6 +52,10 @@ h7.card-header{
     background-color: firebrick;
 }
 
+.card.Instant{
+    background-color: #BADA55;
+}
+
 .card.Normal{
     background-color: green;
 }

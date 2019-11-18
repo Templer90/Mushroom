@@ -1,4 +1,4 @@
-const players = [
+const players2 = [
     {
         name: "eric",
         attacks: [

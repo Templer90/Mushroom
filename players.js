@@ -11,9 +11,9 @@ function createTag(tagName, attrs, parent) {
 }
 
 function genCard(obj, classes) {
-    const name = obj.name;
-    const description = obj.description;
-    const type = obj.type;
+    const name = obj.Name;
+    const description = obj.Text;
+    const type = obj.Type;
 
     if (typeof (classes) === 'undefined') {
         classes = "";
@@ -29,7 +29,7 @@ function genCard(obj, classes) {
     return card;
 }
 
-function genPlayer(obj) {
+function genPlayer(file) {
     const genID = (player, controlID) => {
         return "tab" + player + controlID
     };
@@ -91,7 +91,7 @@ function genPlayer(obj) {
         }
     }
 
-    const name = obj.name;
+    const name = file.name;
     const card = createTag("div", {class: "card"});
     const header = createTag("div", {class: "card-header", id: "heading-" + name}, card);
     const but = createTag("button", {
@@ -113,21 +113,33 @@ function genPlayer(obj) {
     const collapseBody = createTag("div", {"class": "card-body"}, collapse);
 
     const nav = createTag("ul", {class: "nav nav-tabs", id: "Tab" + name, role: "tablist"}, collapseBody);
-    createLI("item", name, nav, true);
-    createLI("magic", name, nav);
-    createLI("Weapons", name, nav);
+    let f=true;
+    for (const d in file.data){
+        createLI(d+"", name, nav,f);
+        f=false;
+    }
+    
+    //createLI("item", name, nav, true);
+    //createLI("magic", name, nav);
+    //createLI("Weapons", name, nav);
 
     const tabPaneContend = createTag("div", {class: "tab-content", id: "Tab" + name + "-Contend"}, collapseBody);
-    createPane("item", name, obj.items, tabPaneContend, true);
-    createPane("magic", name, obj.magic, tabPaneContend);
-    createPane("Weapons", name, obj.attacks, tabPaneContend);
+    f=true;
+    for (const d in file.data){
+        createPane(d+"", name, file.data[d+""], tabPaneContend, f);
+       // createLI(d+"", name, nav,f);
+        f=false;
+    }
+    //createPane("item", name, file.items, tabPaneContend, true);
+    //createPane("magic", name, file.magic, tabPaneContend);
+    //createPane("Weapons", name, file.attacks, tabPaneContend);
     
     return card;
 }
 
 const offsets = {
-    name: {r: 1, c: "B", l:1},
-    magic: {r: 5, c: "A", l:3},
+    name: {c: "B", r: 1, l: 1},
+    magic: {c: "A", r: 5, l: 3},
 
 
     get: function(thing, array, row = 0){
@@ -143,11 +155,64 @@ const offsets = {
     }
 };
 
+function explore(array){
+    function isDefined(x, y, a) {
+        if (typeof (a[x]) === 'undefined') {
+            return false;
+        }
+        return typeof (a[x][y]) !== 'undefined';
+    }
+    
+    let found=[];
+    const magicString="Kategorie:";
+    for (let r = 2; r < array.length; r++) {
+        let row = array[r];
+        for (let c = 0; c < row.length; c++) {
+            if (array[r][c].trim().startsWith(magicString)) {
+                let cat = array[r][c].substring(magicString.length).trim();
+                let l = 0;
+
+                let names=[];
+                while (isDefined(r + 1, c + l, array) && (array[r + 1][c + l].trim() !== "")) {
+                    names[l]=array[r + 1][c + l];
+                    l++;
+                }
+
+                let lines = [];
+                let line = 0;
+                while (isDefined(r + 2 + line, c, array) && (array[r + 2 + line][c].trim() !== "")) {
+                    let data = {};
+                    for (let i = 0; i < l; i++) {
+                        data[names[i]] = typeof (array[r + 2 + line][c + i]) === 'undefined' ? "" : array[r + 2 + line][c + i].trim();
+                    }
+                    lines[line] = data;
+                    line++;
+                }
+
+                found[cat] = lines;
+            }
+        }
+    }
+    
+    return found;
+}
+
+const data = [];
 
 function init() {
     const accordion = document.getElementById("accordion");
+    const players = ["Player_Eric", "Player_Björn"];
     for (const player in players) {
-        accordion.appendChild(genPlayer(players[player]));
+        handleClientLoad(players[player + ""], (response) => {
+            //response.result.values;
+            let file = {
+                name: response.result.values[0][1],
+                data: explore(response.result.values)
+            };
+
+            accordion.appendChild(genPlayer(file));
+            data.push(file);
+        });
     }
 }
 
