@@ -73,7 +73,7 @@ function genPlayer(file) {
             }, currentRow);
             
             // noinspection JSUnfilteredForInLoop
-            currentCol.appendChild(genCard(list[obj]));
+            currentCol.appendChild(genCard(list[obj], "cardboard"));
 
             if (col === max) {
                 col = 0;
@@ -164,32 +164,41 @@ function explore(array){
     }
     
     let found=[];
-    const magicString="Kategorie:";
+    const magicString = "Kategorie:";
+    const determinedAttribute = "Name";
     for (let r = 2; r < array.length; r++) {
-        let row = array[r];
-        for (let c = 0; c < row.length; c++) {
+        for (let c = 0; c < array[r].length; c++) {
             if (array[r][c].trim().startsWith(magicString)) {
-                let cat = array[r][c].substring(magicString.length).trim();
+                let category = array[r][c].substring(magicString.length).trim();
                 let l = 0;
-
-                let names=[];
+                let names = [];
+                let determinedIndex = 0;
                 while (isDefined(r + 1, c + l, array) && (array[r + 1][c + l].trim() !== "")) {
-                    names[l]=array[r + 1][c + l];
+                    names[l] = array[r + 1][c + l];
+
+                    if (array[r + 1][c + l].trim() === determinedAttribute) {
+                        determinedIndex = l;
+                    }
+                    
                     l++;
                 }
 
                 let lines = [];
                 let line = 0;
-                while (isDefined(r + 2 + line, c, array) && (array[r + 2 + line][c].trim() !== "")) {
+                let row = r + 2 + line;
+                while (isDefined(row, c, array) && (array[row][c + determinedIndex].trim() !== "")) {
                     let data = {};
+                    
                     for (let i = 0; i < l; i++) {
-                        data[names[i]] = typeof (array[r + 2 + line][c + i]) === 'undefined' ? "" : array[r + 2 + line][c + i].trim();
+                        data[names[i]] = typeof (array[row][c + i]) === 'undefined' ? "" : array[row][c + i].trim();
                     }
+                    
                     lines[line] = data;
                     line++;
+                    row = r + 2 + line;
                 }
 
-                found[cat] = lines;
+                found[category] = lines;
             }
         }
     }
@@ -204,7 +213,6 @@ function init() {
     const players = ["Player_Eric", "Player_Björn","Player_Kevin","Player_Marc","Player_Martina"];
     for (const player in players) {
         handleClientLoad(players[player + ""], (response) => {
-            //response.result.values;
             let file = {
                 name: response.result.values[0][1],
                 data: explore(response.result.values)
