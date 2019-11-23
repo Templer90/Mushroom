@@ -37,11 +37,11 @@ function genPlayer(file) {
     function createLI(controlID, player, nav, active) {
         const tab = createTag("li", {class: "nav-item"});
         const a = createTag("a", {
-            class: active ? "nav-link active" : "nav-link",
-            id: player + "-" + controlID + "-tab",
-            href: "#" + genID(player, controlID),
+            "class": active ? "nav-link active" : "nav-link",
+            "id": player + "-" + controlID + "-tab",
+            "href": "#" + genID(player, controlID),
             "data-toggle": "tab",
-            role: "tab",
+            "role": "tab",
             "aria-controls": "nav-" + player + "-" + controlID,
             "aria-selected": active ? "true" : "false"
         });
@@ -52,28 +52,28 @@ function genPlayer(file) {
 
     function createPane(controlID, player, list, tabPaneContend, active) {
         const tabPaneItem = createTag("div", {
-            class: "tab-pane fade show" + (active ? " active" : ""),
-            id: genID(player, controlID),
-            role: "tabpanel",
+            "class": "tab-pane fade show" + (active ? " active" : ""),
+            "id": genID(player, controlID),
+            "role": "tabpanel",
             "aria-labelledby": player + "-" + controlID + "-tab"
         }, tabPaneContend);
-        
+
         let currentRow = createTag("div", {
             class: "row"
         }, tabPaneItem);
-        
+
         let row = 0;
         let col = 0;
-        let max=2;
-        for (const obj in list) {
+        const max = 2;
+        for (const obj of list) {
             col++;
 
             let currentCol = createTag("div", {
                 class: "col"
             }, currentRow);
-            
-            // noinspection JSUnfilteredForInLoop
-            currentCol.appendChild(genCard(list[obj], "cardboard"));
+
+
+            currentCol.appendChild(genCard(obj, "cardboard"));
 
             if (col === max) {
                 col = 0;
@@ -95,8 +95,8 @@ function genPlayer(file) {
     const card = createTag("div", {class: "card"});
     const header = createTag("div", {class: "card-header", id: "heading-" + name}, card);
     const but = createTag("button", {
-        class: "btn btn-link",
-        type: "button",
+        "class": "btn btn-link",
+        "type": "button",
         "data-toggle": "collapse",
         "data-target": "#collapse-" + name,
         "aria-expanded": "true",
@@ -105,8 +105,8 @@ function genPlayer(file) {
     but.innerText = name;
 
     const collapse = createTag("div", {
-        id: "collapse-" + name,
-        class: "collapse",
+        "id": "collapse-" + name,
+        "class": "collapse",
         "aria-labelledby": "headingOne",
         "data-parent": "#accordion"
     }, card);
@@ -119,41 +119,15 @@ function genPlayer(file) {
         f=false;
     }
     
-    //createLI("item", name, nav, true);
-    //createLI("magic", name, nav);
-    //createLI("Weapons", name, nav);
-
     const tabPaneContend = createTag("div", {class: "tab-content", id: "Tab" + name + "-Contend"}, collapseBody);
     f=true;
     for (const d in file.data){
         createPane(d+"", name, file.data[d+""], tabPaneContend, f);
-       // createLI(d+"", name, nav,f);
         f=false;
     }
-    //createPane("item", name, file.items, tabPaneContend, true);
-    //createPane("magic", name, file.magic, tabPaneContend);
-    //createPane("Weapons", name, file.attacks, tabPaneContend);
     
     return card;
 }
-
-const offsets = {
-    name: {c: "B", r: 1, l: 1},
-    magic: {c: "A", r: 5, l: 3},
-
-
-    get: function(thing, array, row = 0){
-        let off = this[thing];
-        let ret = [];
-        let col = off.c.charCodeAt(0) - "A".charCodeAt(0);
-
-        for (let i = 0; i < off.l; i++) {
-            ret[i] = array[(off.r - 1) + row][col+i];
-        }
-
-        return ret;
-    }
-};
 
 function explore(array){
     function isDefined(x, y, a) {
@@ -210,9 +184,9 @@ const data = [];
 
 function init() {
     const accordion = document.getElementById("accordion");
-    const players = ["Player_Eric", "Player_Björn","Player_Kevin","Player_Marc","Player_Martina"];
-    for (const player in players) {
-        handleClientLoad(players[player + ""], (response) => {
+    const players = ["Player_Eric", "Player_Björn", "Player_Kevin", "Player_Marc", "Player_Martina"];
+    for (const player of players) {
+        handleClientLoad(player, (response) => {
             let file = {
                 name: response.result.values[0][1],
                 data: explore(response.result.values)

@@ -10,7 +10,9 @@ function init() {
         const b = document.createElement('button');
         b.setAttribute('class', 'dropdown-item');
         b.setAttribute('type', 'button');
-        b.setAttribute('onClick', "changeType('" + entry + "');");
+        b.addEventListener('click', () => {
+            changeType(entry+"");
+        });
         b.innerHTML = entry;
         but.appendChild(b);
 
@@ -36,16 +38,34 @@ function init() {
 }
 
 function changeType(t) {
+    function call_Pre_Post(func) {
+        if ((typeof (data[type]) == 'object')) {
+            if ((typeof (data[type][func]) === 'function')) {
+                data[type][func](data[type]);
+            }
+        }
+    }
+    
     let but = document.getElementById('dropdownMenuButton');
     but.innerHTML = t;
+    
+    call_Pre_Post("postFunc");
     type = t;
+    call_Pre_Post("preFunc");
+
     main();
 }
 
 function main() {
-    let index = Math.floor(Math.random() * data[type].length);
     let div = document.getElementById('effect');
+    if (typeof (data[type].func) !== "undefined") {
+        data[type].func(data[type], div);
+        return;
+    }
+
+    let index = Math.floor(Math.random() * data[type].length);
     let element = data[type][index];
+    
     let dat = {
         text: 'debugText',
         func: () => {}

@@ -36,6 +36,12 @@ h7.card-header{
     padding: 0.25rem 0.75rem;
 }
 
+
+#effect>.row{
+    margin-bottom: 20px;
+    text-align: start;
+}
+
 .cardboard.None{
     background-color: ghostwhite;
 }

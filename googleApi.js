@@ -3,8 +3,6 @@ const SPREADSHEET_ID = '1u-z6WCIL3GXrMSH2snJxcG3OayiaUC1yxJFXGN7tkXM';
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
-//A Queue would be nice
-
 function handleClientLoad(sheet, callback) {
     gapi.load('client', () => {
         gapi.client.init({

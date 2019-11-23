@@ -3,12 +3,12 @@
 //{spreadsheet:"Sheet von GoogleDock", lineCallback:},
 const data = {
     Mushrooms: {
-        spreadsheet:"Mushrooms",
+        spreadsheet: "MushroomTable",
         lineCallback: (line) => {
             return line[0] + '<br>' + line[1];
         }
     },
-    FreshD:[
+    FreshD: [
         "Ich bin alt, ich bin bald tot, aus Grün wird Rot.",
         "Ey yo ihr Negerkinder, ey ihr stinkt so doll wie Rinder. Echt wie die Scheiße von ner Kuh, das macht mir direkt die Nase zu. Ihr seid Scheiße, ich weiß, wie ich heiße! Fresh Dumbledore!, geht in euer Ohr! Einmal rein und wieder raus, so siehts aus!",
         "Heeeyyyy yo ich bin Fresh Dumbledore, back from the Underground back for more. Ich rappe hier, ich rappe dort, ich rappe hundert mal bessaaaa als der dunkle Lord!",
@@ -60,6 +60,135 @@ const data = {
             }
         }
     ],
+    "Special Loot":
+        {
+            list: ["Mundane", "Common", "Uncommon", "Rare", "Very Rare", "Legendary"],
+            data: null,
+            currentRarity: "Mundane",
+            preFunc: (obj) => {
+                const randButton = document.getElementById("randomButton");
+                randButton.setAttribute("disabled", "disabled");
+                document.getElementById('effect').innerHTML = "Loading";
+
+                const dropdownString = '<div id="rarityDropdown" class="dropdown d-inline">\n' +
+                    '      <button class="btn btn-secondary dtn-sm dropdown-toggle" type="button" id="rarityDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mundane</button>\n' +
+                    '      <div class="dropdown-menu" aria-labelledby="rarityDropdownButton" id="dropdownRarityButtonList"></div>\n' +
+                    '</div>';
+
+                const second = document.getElementById('buttonLine');
+                second.appendChild(document.createRange().createContextualFragment(dropdownString));
+                const dropdown = document.getElementById('dropdownRarityButtonList');
+
+
+                for (const entry of obj.list) {
+                    const b = document.createElement('button');
+                    b.setAttribute('class', 'dropdown-item');
+                    b.setAttribute('type', 'button');
+                    b.addEventListener('click', () => {
+                        let but = document.getElementById('rarityDropdownButton');
+                        but.innerHTML = entry;
+                        obj.currentRarity = entry;
+
+                        obj.func(obj, document.getElementById('effect'));
+                    });
+                    b.innerHTML = entry;
+                    dropdown.appendChild(b);
+                }
+                $('.dropdown-toggle').dropdown();
+
+                if (obj.data !== null) {
+                    randButton.removeAttribute("disabled");
+                    return;
+                }
+
+                handleClientLoad("LootTable", (response) => {
+                    function transpose(arr, keys) {
+                        let ret = {
+                            Attributes: null,
+                            Gold: "0",
+                            Name: null,
+                            Rarity: "Common",
+                            Treasure: null,
+                            Type: null,
+                            Weight: null
+                        };
+                        for (let i = 0; i < keys.length; i++) {
+                            if ((typeof (arr[i]) !== "undefined") && (arr[i].trim() !== "")) {
+                                ret[keys[i]] = arr[i] + "";
+                            }
+                        }
+                        return ret;
+                    }
+
+                    function add(rarity, rest, obj) {
+                        if (typeof (obj.data[rarity]) === 'undefined') {
+                            obj.data[rarity] = [];
+                        }
+                        obj.data[rarity].push(rest);
+                    }
+
+                    let data = response.result.values;
+                    obj.data = [];
+
+
+                    let keys = [];
+                    for (let i = 0; i < data[0].length; i++) {
+                        keys.push(data[0][i]);
+                    }
+
+                    for (let i = 1; i < data.length; i++) {
+                        let o = transpose(data[i], keys);
+                        add(o.Rarity, o, obj);
+                    }
+
+                    randButton.removeAttribute("disabled");
+                    obj.func(obj, document.getElementById('effect'));
+                });
+            },
+            postFunc: (obj) => {
+                document.getElementById("randomButton").removeAttribute("disabled");
+                document.getElementById('rarityDropdown').remove();
+            },
+            func: (obj, div) => {
+                if (obj.data === null) return;
+
+                function createRow(heading, text) {
+                    const row = document.createElement("div");
+                    row.setAttribute("class", "row");
+
+                    const headingTag = document.createElement("div");
+                    headingTag.setAttribute("class", "col col-3");
+                    headingTag.innerHTML = heading;
+
+                    const textTag = document.createElement("div");
+                    textTag.setAttribute("class", "col");
+                    textTag.innerHTML = text;
+
+                    row.appendChild(headingTag);
+                    row.appendChild(textTag);
+
+                    return row;
+                }
+
+                let index = Math.floor(Math.random() * obj.data[obj.currentRarity].length);
+                let chosen = obj.data[obj.currentRarity][index];
+                const order = [
+                    "Treasure",
+                    "Weight",
+                    "Attributes",
+                    "Requirements"
+                ];
+
+                div.innerHTML = "";
+                let type = (chosen["Type"] !== null && chosen["Type"] !== "Treasure") ? " a " + chosen["Type"] : "";
+                let gold = (chosen["Gold"] !== "0" && chosen["Gold"] !== "0. gp") ? " (" + chosen["Gold"] + ")" : "";
+                div.appendChild(createRow("Name", chosen["Name"] + gold + type));
+                for (let entry of order) {
+                    if (chosen[entry] == null) continue;
+                    div.appendChild(createRow(entry, chosen[entry]));
+                }
+            }
+        },
     Magic8Ball: [
         "It is certain.",
         "It is decidedly so.",
