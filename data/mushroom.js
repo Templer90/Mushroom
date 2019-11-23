@@ -68,33 +68,33 @@ const data = {
             preFunc: (obj) => {
                 const randButton = document.getElementById("randomButton");
                 randButton.setAttribute("disabled", "disabled");
-                document.getElementById('effect').innerHTML = "Loading";
+                document.getElementById("effect").innerHTML = "Loading";
 
                 const dropdownString = '<div id="rarityDropdown" class="dropdown d-inline">\n' +
                     '      <button class="btn btn-secondary dtn-sm dropdown-toggle" type="button" id="rarityDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mundane</button>\n' +
                     '      <div class="dropdown-menu" aria-labelledby="rarityDropdownButton" id="dropdownRarityButtonList"></div>\n' +
                     '</div>';
 
-                const second = document.getElementById('buttonLine');
+                const second = document.getElementById("buttonLine");
                 second.appendChild(document.createRange().createContextualFragment(dropdownString));
-                const dropdown = document.getElementById('dropdownRarityButtonList');
+                const dropdown = document.getElementById("dropdownRarityButtonList");
 
 
                 for (const entry of obj.list) {
-                    const b = document.createElement('button');
-                    b.setAttribute('class', 'dropdown-item');
-                    b.setAttribute('type', 'button');
-                    b.addEventListener('click', () => {
-                        let but = document.getElementById('rarityDropdownButton');
+                    const b = document.createElement("button");
+                    b.setAttribute("class", "dropdown-item");
+                    b.setAttribute("type", "button");
+                    b.addEventListener("click", () => {
+                        let but = document.getElementById("rarityDropdownButton");
                         but.innerHTML = entry;
                         obj.currentRarity = entry;
 
-                        obj.func(obj, document.getElementById('effect'));
+                        obj.func(obj, document.getElementById("effect"));
                     });
                     b.innerHTML = entry;
                     dropdown.appendChild(b);
                 }
-                $('.dropdown-toggle').dropdown();
+                $(".dropdown-toggle").dropdown();
 
                 if (obj.data !== null) {
                     randButton.removeAttribute("disabled");
@@ -121,7 +121,7 @@ const data = {
                     }
 
                     function add(rarity, rest, obj) {
-                        if (typeof (obj.data[rarity]) === 'undefined') {
+                        if (typeof (obj.data[rarity]) === "undefined") {
                             obj.data[rarity] = [];
                         }
                         obj.data[rarity].push(rest);
@@ -142,12 +142,12 @@ const data = {
                     }
 
                     randButton.removeAttribute("disabled");
-                    obj.func(obj, document.getElementById('effect'));
+                    obj.func(obj, document.getElementById("effect"));
                 });
             },
             postFunc: (obj) => {
                 document.getElementById("randomButton").removeAttribute("disabled");
-                document.getElementById('rarityDropdown').remove();
+                document.getElementById("rarityDropdown").remove();
             },
             func: (obj, div) => {
                 if (obj.data === null) return;

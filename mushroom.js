@@ -1,26 +1,27 @@
-let type = 'Magic8Ball';
+let type = "Magic8Ball";
 
 function init() {
-    const but = document.getElementById('dropdownMenuButtonList');
+    const dropdownList = document.getElementById("dropdownMenuButtonList");
     const defaultLineCallback = (line) => {
-        return line[0] + '<br>' + line[1];
+        return line[0] + "<br>" + line[1];
     };
     
-    for (const entry in data) {
-        const b = document.createElement('button');
-        b.setAttribute('class', 'dropdown-item');
-        b.setAttribute('type', 'button');
-        b.addEventListener('click', () => {
-            changeType(entry+"");
+    for (const datum in data) {
+        const entry = datum + "";
+        const listEntry = document.createElement("button");
+        listEntry.setAttribute("class", "dropdown-item");
+        listEntry.setAttribute("type", "button");
+        listEntry.addEventListener("click", () => {
+            changeType(entry);
         });
-        b.innerHTML = entry;
-        but.appendChild(b);
+        listEntry.innerHTML = entry;
+        dropdownList.appendChild(listEntry);
 
         const current = data[entry];
-        if ((typeof (current) === 'object') && (typeof (current.spreadsheet) === 'string')) {
+        if ((typeof (current) === "object") && (typeof (current.spreadsheet) === "string")) {
             handleClientLoad(current.spreadsheet, (response) => {
                 let callback = defaultLineCallback;
-                if (typeof (current.lineCallback) === 'function') {
+                if (typeof (current.lineCallback) === "function") {
                     callback = current.lineCallback;
                 }
 
@@ -39,15 +40,15 @@ function init() {
 
 function changeType(t) {
     function call_Pre_Post(func) {
-        if ((typeof (data[type]) == 'object')) {
-            if ((typeof (data[type][func]) === 'function')) {
+        if ((typeof (data[type]) == "object")) {
+            if ((typeof (data[type][func]) === "function")) {
                 data[type][func](data[type]);
             }
         }
     }
     
-    let but = document.getElementById('dropdownMenuButton');
-    but.innerHTML = t;
+    let button = document.getElementById("dropdownMenuButton");
+    button.innerHTML = t;
     
     call_Pre_Post("postFunc");
     type = t;
@@ -57,7 +58,7 @@ function changeType(t) {
 }
 
 function main() {
-    let div = document.getElementById('effect');
+    let div = document.getElementById("effect");
     if (typeof (data[type].func) !== "undefined") {
         data[type].func(data[type], div);
         return;
@@ -67,19 +68,19 @@ function main() {
     let element = data[type][index];
     
     let dat = {
-        text: 'debugText',
+        text: "debugText",
         func: () => {}
     };
 
-    if (typeof (element) == 'object') {
+    if (typeof (element) == "object") {
         dat = element;
-    } else if (typeof (element) == 'string') {
+    } else if (typeof (element) == "string") {
         dat.text = element;
     }
 
     div.innerHTML = dat.text;
     let ret = dat.func(dat);
-    if (typeof (ret) !== 'undefined') {
+    if (typeof (ret) !== "undefined") {
         div.innerHTML = ret;
     }
 }

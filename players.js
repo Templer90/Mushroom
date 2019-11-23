@@ -1,29 +1,42 @@
+function isDefined(thing) {
+    return (thing && typeof (thing) !== "undefined");
+}
+
+function unDefined(thing) {
+    return typeof (thing) === "undefined";
+}
+
 function createTag(tagName, attrs, parent) {
     const tag = document.createElement(tagName + "");
     for (const attr in attrs) {
         tag.setAttribute(attr + "", attrs[attr + ""] + "");
     }
 
-    if (typeof (parent) !== 'undefined') {
+    if (isDefined(parent)) {
         parent.appendChild(tag);
     }
     return tag;
 }
+
+function createDiv(attrs, parent) {
+    return createTag("div", attrs, parent);
+}
+
 
 function genCard(obj, classes) {
     const name = obj.Name;
     const description = obj.Text;
     const type = obj.Type;
 
-    if (typeof (classes) === 'undefined') {
+    if (unDefined(classes)) {
         classes = "";
     }
 
-    const card = createTag("div", {class: "card " + type + " " + classes});
+    const card = createDiv({class: "card " + type + " " + classes});
     const head = createTag("h7", {class: "card-header"}, card);
     head.innerText = name;
 
-    const cardBody = createTag("div", {class: "card-body", style:"font-size: 0.5rem;"}, card);
+    const cardBody = createDiv({class: "card-body", style: "font-size: 0.5rem;"}, card);
     cardBody.innerHTML = description;
 
     return card;
@@ -33,7 +46,7 @@ function genPlayer(file) {
     const genID = (player, controlID) => {
         return "tab" + player + controlID
     };
-    
+
     function createLI(controlID, player, nav, active) {
         const tab = createTag("li", {class: "nav-item"});
         const a = createTag("a", {
@@ -51,16 +64,14 @@ function genPlayer(file) {
     }
 
     function createPane(controlID, player, list, tabPaneContend, active) {
-        const tabPaneItem = createTag("div", {
+        const tabPaneItem = createDiv({
             "class": "tab-pane fade show" + (active ? " active" : ""),
             "id": genID(player, controlID),
             "role": "tabpanel",
             "aria-labelledby": player + "-" + controlID + "-tab"
         }, tabPaneContend);
 
-        let currentRow = createTag("div", {
-            class: "row"
-        }, tabPaneItem);
+        let currentRow = createDiv({class: "row"}, tabPaneItem);
 
         let row = 0;
         let col = 0;
@@ -68,9 +79,7 @@ function genPlayer(file) {
         for (const obj of list) {
             col++;
 
-            let currentCol = createTag("div", {
-                class: "col"
-            }, currentRow);
+            let currentCol = createDiv({class: "col"}, currentRow);
 
 
             currentCol.appendChild(genCard(obj, "cardboard"));
@@ -79,7 +88,7 @@ function genPlayer(file) {
                 col = 0;
                 row++;
 
-                currentRow = createTag("div", {
+                currentRow = createDiv({
                     class: "row"
                 }, tabPaneItem);
             }
@@ -87,13 +96,13 @@ function genPlayer(file) {
 
         for (let i = col; i < max; i++) {
             col++;
-            createTag("div", {class: "col"}, currentRow);
+            createDiv({class: "col"}, currentRow);
         }
     }
 
     const name = file.name;
-    const card = createTag("div", {class: "card"});
-    const header = createTag("div", {class: "card-header", id: "heading-" + name}, card);
+    const card = createDiv({class: "card"});
+    const header = createDiv({class: "card-header", id: "heading-" + name}, card);
     const but = createTag("button", {
         "class": "btn btn-link",
         "type": "button",
@@ -104,40 +113,40 @@ function genPlayer(file) {
     }, header);
     but.innerText = name;
 
-    const collapse = createTag("div", {
+    const collapse = createDiv({
         "id": "collapse-" + name,
         "class": "collapse",
         "aria-labelledby": "headingOne",
         "data-parent": "#accordion"
     }, card);
-    const collapseBody = createTag("div", {"class": "card-body"}, collapse);
+    const collapseBody = createDiv({class: "card-body"}, collapse);
 
     const nav = createTag("ul", {class: "nav nav-tabs", id: "Tab" + name, role: "tablist"}, collapseBody);
-    let f=true;
-    for (const d in file.data){
-        createLI(d+"", name, nav,f);
-        f=false;
+    let f = true;
+    for (const d in file.data) {
+        createLI(d + "", name, nav, f);
+        f = false;
     }
-    
-    const tabPaneContend = createTag("div", {class: "tab-content", id: "Tab" + name + "-Contend"}, collapseBody);
-    f=true;
-    for (const d in file.data){
-        createPane(d+"", name, file.data[d+""], tabPaneContend, f);
-        f=false;
+
+    const tabPaneContend = createDiv({class: "tab-content", id: "Tab" + name + "-Contend"}, collapseBody);
+    f = true;
+    for (const d in file.data) {
+        createPane(d + "", name, file.data[d + ""], tabPaneContend, f);
+        f = false;
     }
-    
+
     return card;
 }
 
-function explore(array){
+function explore(array) {
     function isDefined(x, y, a) {
         if (typeof (a[x]) === 'undefined') {
             return false;
         }
         return typeof (a[x][y]) !== 'undefined';
     }
-    
-    let found=[];
+
+    let found = [];
     const magicString = "Kategorie:";
     const determinedAttribute = "Name";
     for (let r = 2; r < array.length; r++) {
@@ -153,7 +162,7 @@ function explore(array){
                     if (array[r + 1][c + l].trim() === determinedAttribute) {
                         determinedIndex = l;
                     }
-                    
+
                     l++;
                 }
 
@@ -162,11 +171,11 @@ function explore(array){
                 let row = r + 2 + line;
                 while (isDefined(row, c, array) && (array[row][c + determinedIndex].trim() !== "")) {
                     let data = {};
-                    
+
                     for (let i = 0; i < l; i++) {
                         data[names[i]] = typeof (array[row][c + i]) === 'undefined' ? "" : array[row][c + i].trim();
                     }
-                    
+
                     lines[line] = data;
                     line++;
                     row = r + 2 + line;
@@ -176,7 +185,7 @@ function explore(array){
             }
         }
     }
-    
+
     return found;
 }
 
@@ -197,7 +206,6 @@ function init() {
         });
     }
 }
-
 
 
 init();
