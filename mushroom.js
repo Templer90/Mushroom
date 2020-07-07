@@ -68,7 +68,7 @@ function main() {
     let element = data[type][index];
     
     let dat = {
-        text: "debugText",
+        text: "Error Loading file",
         func: () => {}
     };
 
