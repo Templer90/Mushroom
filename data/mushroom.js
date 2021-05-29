@@ -298,7 +298,14 @@ const data = {
                 "Asbest": "Du wirst für 2d4 minuten Feuerfest.",
                 "Katze": "Du wirst unsichtbar wenn du Tuba spielst.",
                 "Schuhe": "Du schmeckst das, was die Füße des Lebewesens berühren, was du zuletzt gesehen hast. Viel Spass.",
-                "Ethanol": "Du verträgst keinen Alkohol mehr. Für 2d4 Tage."
+                "Ethanol": "Du verträgst keinen Alkohol mehr. Für 2d4 Tage.",
+                "Oregano": "Du wirst für 1d6 Stunden zu 25% transparent",
+                "Spinnenblut": "Fliegen sehen lecker aus.",
+                "Lotus": "Du wirst für 2d4 Stunden 'True-Neutral' und bist komplett dicht."
+                "Biene": "Schmeckt nach Biene, im Nachgang nach Honig. Wieso auch immer.",
+                "Kupfer": "Du wirst Gold-Tan (Bodybuilder) für 3d4 Tage.",
+                "Enolem": "Schmeckt nach Enolem. Deine Haarfrabe wird grünstichig und bekommmt ein Melonenmuster. <br> Das ist permanent, bis das rauswächst.",
+                "Wie riesen Bohnen": "Scheinriesensyndrom (Commune Falsi Giant Syndrome) <br> Je weiter jemand von dir entfernt ist, desto größer wirkst du, bis zu riesengröße bei 50 metern abstand."
             },
             func: (obj) => {
                 let keys = Object.keys(obj.list);
