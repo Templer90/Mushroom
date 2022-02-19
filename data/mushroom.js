@@ -61,7 +61,7 @@ const data = {
         func: (obj) => {
                 let p = (Math.random() * 9)+1;
                 let h = "minutes";
-                if(p<=2){
+                if(p<2){
                     h="minute";
                 }
                 let i = Math.floor(Math.random() * obj.list.length);
