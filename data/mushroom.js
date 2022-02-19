@@ -61,8 +61,8 @@ const data = {
         func: (obj) => {
                 let p = (Math.random() * 9)+1;
                 let h = "minutes";
-                if(p==1){
-                    h="minutes";
+                if(p<=2){
+                    h="minute";
                 }
                 let i = Math.floor(Math.random() * obj.list.length);
                 let str = obj.list[i].replace("%p", p.toFixed(0)).replace("%h", h);
