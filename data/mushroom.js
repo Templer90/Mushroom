@@ -313,7 +313,7 @@ const data = {
                 "Kissen": "Kissen",
                 "Gefahr": "Schmeckt nach gefahr",
                 "Kaugummi": "Du bist hier um den Gegnern in den Arsch zu treten und Kaugummi zu kauen"
-            }
+            },
             func: (obj) => {
                 let keys = Object.keys(obj.list);
                 let i = Math.floor(Math.random() * keys.length);
