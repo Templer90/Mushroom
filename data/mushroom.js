@@ -57,11 +57,16 @@ const data = {
     Time: [
         {
         text: "Irrelevant",
-        list: ["Around %p minutes", "Exactly %p minutes", "%p minutes", "Close to %p minutes"],
+        list: ["Around %p %h", "Exactly %p %h", "%p %h", "Close to %p %h"],
         func: (obj) => {
                 let p = (Math.random() * 9)+1;
+                let h = "minutes";
+                if(p==1){
+                    h="minutes";
+                }
                 let i = Math.floor(Math.random() * obj.list.length);
-                return obj.list[i].replace("%p", p.toFixed(0));
+                let str = obj.list[i].replace("%p", p.toFixed(0)).replace("%h", h);
+                return str;
             }
         }
     ],
