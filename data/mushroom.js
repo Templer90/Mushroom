@@ -54,6 +54,17 @@ const data = {
             }
         }
     ],
+    Time: [
+        {
+        text: "Irrelevant",
+        list: ["Around %p minutes", "Exactly %p minutes", "%p minutes", "Close to %p minutes"],
+        func: (obj) => {
+                let p = (Math.random() * 9)+1;
+                let i = Math.floor(Math.random() * obj.list.length);
+                return obj.list[i].replace("%p", p.toFixed(0));
+            }
+        }
+    ],
     "Special Loot":
         {
             list: ["Mundane", "Common", "Uncommon", "Rare", "Very Rare", "Legendary"],
