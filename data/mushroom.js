@@ -306,8 +306,14 @@ const data = {
                 "Kupfer": "Du wirst Gold-Tan (Bodybuilder) für 3d4 Tage.",
                 "Enolem": "Schmeckt nach Enolem. Deine Haarfrabe wird grünstichig und bekommmt ein Melonenmuster. <br> Das ist permanent, bis das rauswächst.",
                 "Riesen-Bohnen": "Scheinriesensyndrom (Commune Falsi Giant Syndrome) <br> Je weiter jemand von dir entfernt ist, desto größer wirkst du, bis zu riesengröße bei 50 metern abstand.",
-                "Weicheeier": "Dein alignment wechelst bei jedem Satz zufällig. <br> 'Aligment ist für Weicheier' - Bragon (zugesoffen)"
-            },
+                "Weicheeier": "Dein alignment wechelst bei jedem Satz zufällig. <br> 'Aligment ist für Weicheier' - Bragon (zugesoffen)",
+                "Zuckerrohr": "Deine Haare verpfilzen zu Rastalocken",
+                "Schlange": "Du bekommst Schuppen. -1 auf Charisma",
+                "Duschgel": "Deine Haare glänzen. Und deine Frisur hält um jede Uhrzeit und in jeden Wetter seine Form",
+                "Kissen": "Kissen",
+                "Gefahr": "Schmeckt nach gefahr",
+                "Kaugummi": "Du bist hier um den Gegnern in den Arsch zu treten und Kaugummi zu kauen"
+            }
             func: (obj) => {
                 let keys = Object.keys(obj.list);
                 let i = Math.floor(Math.random() * keys.length);
