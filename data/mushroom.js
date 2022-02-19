@@ -312,7 +312,8 @@ const data = {
                 "Duschgel": "Deine Haare glänzen. Und deine Frisur hält um jede Uhrzeit und in jeden Wetter seine Form",
                 "Kissen": "Kissen",
                 "Gefahr": "Schmeckt nach gefahr",
-                "Kaugummi": "Du bist hier um den Gegnern in den Arsch zu treten und Kaugummi zu kauen"
+                "Kaugummi": "Du bist hier um den Gegnern in den Arsch zu treten und Kaugummi zu kauen",
+                "Stiefelsohle": "Du hörst auf die mehrheitsmeinung der Gruppe <br>(deine Meinung ausgeschloßen) für 1d6+2 minuten"
             },
             func: (obj) => {
                 let keys = Object.keys(obj.list);
